@@ -8,12 +8,16 @@ class Ui_Form(object):
 	def setupUi(self,Form):
 		w = 400
 		h = 300
+		self.grid = QGridLayout()
 		Form.setObjectName("Form")
 		Form.resize(w,h)
+		Form.setLayout(self.grid)
+		Form.setWindowTitle('time running')
 		self.label = QLabel(Form)
 		self.label.setAlignment(Qt.AlignCenter)
-		self.label.setGeometry(QRect(0,0,w,h))#x,y,w,h text is printed on left bottom of box
+		# self.label.setGeometry(QRect(0,0,w,h))#x,y,w,h text is printed on left bottom of box
 		self.label.setObjectName("label")
+		self.grid.addWidget(self.label,0,0)
 
 class MainControl(object):
 	def __init__(self,time):
