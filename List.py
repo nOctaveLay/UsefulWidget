@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import sys
+import datetime
 # Van-st
 #not finished yet
 import time
@@ -18,6 +19,9 @@ class Ui_Form(object):
 		# self.label.setGeometry(QRect(0,0,w,h))#x,y,w,h text is printed on left bottom of box
 		self.label.setObjectName("label")
 		self.grid.addWidget(self.label,0,0)
+
+		self.Push = QPushButton("start",Form)
+		self.grid.addWidget(self.Push,1,0)
 
 class MainControl(object):
 	def __init__(self,time):
@@ -41,6 +45,7 @@ class MainControl(object):
 
 if __name__ == "__main__":
 	start_time = time.time()
+	file__ = open("running_time.txt","a")
 	app = QApplication(sys.argv)
 	Form = QWidget()
 	ui = Ui_Form()
@@ -56,6 +61,11 @@ if __name__ == "__main__":
 		control.count_time += 1
 	timer = QTimer()
 	timer.timeout.connect(update_label)
-	timer.start(1000)
-
-	sys.exit(app.exec_())
+	def time_start():
+		timer.start(1000)
+	ui.Push.clicked.connect(time_start)
+	if app.exec_() == 0:
+		count = control.count_time
+		file__.write(str({'date':datetime.datetime.now(),'hour':int(count//60//60),'min':int((count//60)%60),'sec':int(count%60)})+"\n")
+		file__.close()
+		sys.exit()
